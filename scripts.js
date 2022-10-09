@@ -99,7 +99,7 @@ function updateMatchList() {
 		var li = document.createElement("li");
 		li.appendChild(document.createTextNode(shuffled_match_list[i]));
 		if (i == current_match) {
-			li.setAttribute('style', 'background-color: salmon; color: white;',);
+			li.setAttribute('style', 'background-color: darkgreen; color: white;',);
 		}
 		match_list_element.appendChild(li);
 	}
