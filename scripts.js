@@ -1,4 +1,19 @@
 const player = []; 
+const match_list = []
+current_match = 0;
+
+function init() {
+	document.addEventListener('keyup', event => {
+		if (event.code === 'Space') {
+			nextMatch();
+		}
+	})
+}
+
+function nextMatch() {
+	current_match = (current_match + 1) % match_list.length;
+	updateMatchList();
+}
 
 function addPlayerPopUp() {
 	document.body.innerHTML += 
@@ -36,6 +51,7 @@ function removePlayer(player_name) {
 	}
 	close_remove_popup()
 	console.log(player)
+	remakeMatchList()
 	updateMatchList()
 }
 
@@ -52,19 +68,13 @@ function close_add_popup() {
 function addPlayer() {
 	var player_name = document.getElementById("add").value;
 	player.push(player_name)
+	remakeMatchList()
 	updateMatchList()
 	close_add_popup()
 }
 
-function updateMatchList() {
-	
-	console.log(1);
-	var match_list_element = document.getElementById("match_list");
-	console.log(2);
-	match_list_element.innerHTML = '';
-	console.log(3);
-
-	const match_list = [];
+function remakeMatchList() {
+	match_list.length = 0;
 
 	for (let p1 = 0; p1 < player.length; p1++) {
 		for (let p2 = 0; p2 < player.length; p2++) {
@@ -76,12 +86,21 @@ function updateMatchList() {
 	}
 
 	shuffled_match_list = shuffle(match_list)
+}
+
+function updateMatchList() {
+
+	var match_list_element = document.getElementById("match_list");
+	match_list_element.innerHTML = '';
 
 	for (let i = 0; i < shuffled_match_list.length; i++) {
 		console.log(match_list[i]);
 		
 		var li = document.createElement("li");
 		li.appendChild(document.createTextNode(shuffled_match_list[i]));
+		if (i == current_match) {
+			li.setAttribute('style', 'background-color: salmon; color: white;',);
+		}
 		match_list_element.appendChild(li);
 	}
 }
